@@ -1,0 +1,284 @@
+<mvc:View
+    controllerName="com.dashboard.fiori.controller.Dashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.f"
+    xmlns:suite="sap.suite.ui.commons"
+    xmlns="sap.m">
+    
+    <Page id="dashboardPage" 
+          title="{i18n>dashboardTitle}" 
+          enableScrolling="true"
+          class="sapUiResponsiveContentPadding">
+        
+        <content>
+            <!-- Header Section with Date Filters -->
+            <Panel id="filterPanel" 
+                   headerText="{i18n>filterPanelTitle}" 
+                   expandable="false"
+                   class="sapUiResponsiveMargin">
+                <content>
+                    <HBox alignItems="Center" 
+                          justifyContent="SpaceBetween" 
+                          class="sapUiMediumMarginBottom">
+                        <VBox class="sapUiMediumMarginEnd">
+                            <Label text="{i18n>fromDateLabel}" 
+                                   class="sapUiTinyMarginBottom"/>
+                            <DatePicker id="fromDatePicker"
+                                       value="{/fromDate}"
+                                       valueFormat="yyyy-MM-dd"
+                                       displayFormat="MMM dd, yyyy"
+                                       change="onDateChange"
+                                       class="sapUiMediumMarginEnd"/>
+                        </VBox>
+                        
+                        <VBox class="sapUiMediumMarginEnd">
+                            <Label text="{i18n>toDateLabel}" 
+                                   class="sapUiTinyMarginBottom"/>
+                            <DatePicker id="toDatePicker"
+                                       value="{/toDate}"
+                                       valueFormat="yyyy-MM-dd"
+                                       displayFormat="MMM dd, yyyy"
+                                       change="onDateChange"
+                                       class="sapUiMediumMarginEnd"/>
+                        </VBox>
+                        
+                        <VBox>
+                            <Label text="" class="sapUiTinyMarginBottom"/> <!-- Spacer -->
+                            <Button id="applyFiltersBtn"
+                                   text="{i18n>applyFiltersBtn}"
+                                   type="Emphasized"
+                                   press="onApplyFilters"
+                                   icon="sap-icon://refresh"/>
+                        </VBox>
+                    </HBox>
+                </content>
+            </Panel>
+            
+            <!-- KPI Cards Section -->
+            <Panel id="kpiPanel" 
+                   headerText="{i18n>kpiPanelTitle}" 
+                   expandable="false"
+                   class="sapUiResponsiveMargin">
+                <content>
+                    <f:GridContainer id="kpiGrid" class="sapUiMediumMarginTop">
+                        <f:layoutS>
+                            <f:GridContainerSettings rowSize="5rem" columnSize="15rem" gap="1rem"/>
+                        </f:layoutS>
+                        <f:layoutM>
+                            <f:GridContainerSettings rowSize="5rem" columnSize="15rem" gap="1rem"/>
+                        </f:layoutM>
+                        <f:layoutL>
+                            <f:GridContainerSettings rowSize="5rem" columnSize="15rem" gap="1rem"/>
+                        </f:layoutL>
+                        
+                        <!-- Total Sales Card -->
+                        <f:Card class="kpiCard">
+                            <f:layoutData>
+                                <f:GridContainerItemLayoutData rows="2" columns="2"/>
+                            </f:layoutData>
+                            <f:header>
+                                <f:Header>
+                                    <f:toolbar>
+                                        <Toolbar>
+                                            <Title text="{i18n>totalSalesTitle}" level="H3"/>
+                                            <ToolbarSpacer/>
+                                            <core:Icon src="sap-icon://sales-notification" color="#0f7d00"/>
+                                        </Toolbar>
+                                    </f:toolbar>
+                                </f:Header>
+                            </f:header>
+                            <f:content>
+                                <VBox alignItems="Center" justifyContent="Center" class="sapUiMediumMargin">
+                                    <Text text="{/kpis/totalSales}" 
+                                          class="kpiValue"/>
+                                    <Text text="{/kpis/salesTrend}" 
+                                          class="kpiTrend"/>
+                                </VBox>
+                            </f:content>
+                        </f:Card>
+                        
+                        <!-- Total Orders Card -->
+                        <f:Card class="kpiCard">
+                            <f:layoutData>
+                                <f:GridContainerItemLayoutData rows="2" columns="2"/>
+                            </f:layoutData>
+                            <f:header>
+                                <f:Header>
+                                    <f:toolbar>
+                                        <Toolbar>
+                                            <Title text="{i18n>totalOrdersTitle}" level="H3"/>
+                                            <ToolbarSpacer/>
+                                            <core:Icon src="sap-icon://cart" color="#1f69a8"/>
+                                        </Toolbar>
+                                    </f:toolbar>
+                                </f:Header>
+                            </f:header>
+                            <f:content>
+                                <VBox alignItems="Center" justifyContent="Center" class="sapUiMediumMargin">
+                                    <Text text="{/kpis/totalOrders}" 
+                                          class="kpiValue"/>
+                                    <Text text="{/kpis/ordersTrend}" 
+                                          class="kpiTrend"/>
+                                </VBox>
+                            </f:content>
+                        </f:Card>
+                        
+                        <!-- Average Order Value Card -->
+                        <f:Card class="kpiCard">
+                            <f:layoutData>
+                                <f:GridContainerItemLayoutData rows="2" columns="2"/>
+                            </f:layoutData>
+                            <f:header>
+                                <f:Header>
+                                    <f:toolbar>
+                                        <Toolbar>
+                                            <Title text="{i18n>avgOrderValueTitle}" level="H3"/>
+                                            <ToolbarSpacer/>
+                                            <core:Icon src="sap-icon://money-bills" color="#d14900"/>
+                                        </Toolbar>
+                                    </f:toolbar>
+                                </f:Header>
+                            </f:header>
+                            <f:content>
+                                <VBox alignItems="Center" justifyContent="Center" class="sapUiMediumMargin">
+                                    <Text text="{/kpis/avgOrderValue}" 
+                                          class="kpiValue"/>
+                                    <Text text="{/kpis/avgTrend}" 
+                                          class="kpiTrend"/>
+                                </VBox>
+                            </f:content>
+                        </f:Card>
+                        
+                        <!-- Customer Count Card -->
+                        <f:Card class="kpiCard">
+                            <f:layoutData>
+                                <f:GridContainerItemLayoutData rows="2" columns="2"/>
+                            </f:layoutData>
+                            <f:header>
+                                <f:Header>
+                                    <f:toolbar>
+                                        <Toolbar>
+                                            <Title text="{i18n>customerCountTitle}" level="H3"/>
+                                            <ToolbarSpacer/>
+                                            <core:Icon src="sap-icon://group" color="#7c4dff"/>
+                                        </Toolbar>
+                                    </f:toolbar>
+                                </f:Header>
+                            </f:header>
+                            <f:content>
+                                <VBox alignItems="Center" justifyContent="Center" class="sapUiMediumMargin">
+                                    <Text text="{/kpis/customerCount}" 
+                                          class="kpiValue"/>
+                                    <Text text="{/kpis/customerTrend}" 
+                                          class="kpiTrend"/>
+                                </VBox>
+                            </f:content>
+                        </f:Card>
+                    </f:GridContainer>
+                </content>
+            </Panel>
+            
+            <!-- Charts Section -->
+            <Panel id="chartsPanel" 
+                   headerText="{i18n>chartsPanelTitle}" 
+                   expandable="false"
+                   class="sapUiResponsiveMargin">
+                <content>
+                    <HBox>
+                        <VBox width="50%" class="sapUiMediumMarginEnd">
+                            <f:Card>
+                                <f:header>
+                                    <f:Header>
+                                        <f:toolbar>
+                                            <Toolbar>
+                                                <Title text="{i18n>salesTrendTitle}" level="H4"/>
+                                            </Toolbar>
+                                        </f:toolbar>
+                                    </f:Header>
+                                </f:header>
+                                <f:content>
+                                    <VBox height="300px" alignItems="Center" justifyContent="Center">
+                                        <Text text="{i18n>chartPlaceholder}" class="sapUiMediumMargin"/>
+                                        <core:Icon src="sap-icon://line-chart" size="3rem" color="#666"/>
+                                    </VBox>
+                                </f:content>
+                            </f:Card>
+                        </VBox>
+                        
+                        <VBox width="50%">
+                            <f:Card>
+                                <f:header>
+                                    <f:Header>
+                                        <f:toolbar>
+                                            <Toolbar>
+                                                <Title text="{i18n>categoryBreakdownTitle}" level="H4"/>
+                                            </Toolbar>
+                                        </f:toolbar>
+                                    </f:Header>
+                                </f:header>
+                                <f:content>
+                                    <VBox height="300px" alignItems="Center" justifyContent="Center">
+                                        <Text text="{i18n>chartPlaceholder}" class="sapUiMediumMargin"/>
+                                        <core:Icon src="sap-icon://pie-chart" size="3rem" color="#666"/>
+                                    </VBox>
+                                </f:content>
+                            </f:Card>
+                        </VBox>
+                    </HBox>
+                </content>
+            </Panel>
+            
+            <!-- Data Table Section -->
+            <Panel id="tablePanel" 
+                   headerText="{i18n>tablePanelTitle}" 
+                   expandable="false"
+                   class="sapUiResponsiveMargin">
+                <content>
+                    <Table id="dashboardTable" 
+                           items="{/tableData}" 
+                           growing="true" 
+                           growingThreshold="20"
+                           class="sapUiMediumMarginTop">
+                        <headerToolbar>
+                            <Toolbar>
+                                <Title text="{i18n>recentTransactionsTitle}" level="H4"/>
+                                <ToolbarSpacer/>
+                                <Button icon="sap-icon://excel-attachment" 
+                                       tooltip="{i18n>exportTooltip}"
+                                       press="onExportData"/>
+                            </Toolbar>
+                        </headerToolbar>
+                        <columns>
+                            <Column>
+                                <Text text="{i18n>dateColumn}"/>
+                            </Column>
+                            <Column>
+                                <Text text="{i18n>transactionIdColumn}"/>
+                            </Column>
+                            <Column>
+                                <Text text="{i18n>customerColumn}"/>
+                            </Column>
+                            <Column>
+                                <Text text="{i18n>amountColumn}"/>
+                            </Column>
+                            <Column>
+                                <Text text="{i18n>statusColumn}"/>
+                            </Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <Text text="{date}"/>
+                                <Text text="{transactionId}"/>
+                                <Text text="{customer}"/>
+                                <Text text="{amount}"/>
+                                <ObjectStatus text="{status}" 
+                                            state="{parts: ['status'], formatter: '.formatStatus'}"/>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </content>
+            </Panel>
+        </content>
+    </Page>
+</mvc:View>

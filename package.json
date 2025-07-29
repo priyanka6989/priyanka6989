@@ -1,0 +1,26 @@
+{
+  "name": "ui5-fiori-dashboard",
+  "version": "1.0.0",
+  "description": "UI5 Fiori Dashboard with Date Selection",
+  "main": "index.html",
+  "scripts": {
+    "start": "ui5 serve",
+    "build": "ui5 build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@ui5/cli": "^3.0.0"
+  },
+  "ui5": {
+    "dependencies": [
+      "@openui5/sap.ui.core",
+      "@openui5/sap.m",
+      "@openui5/sap.f",
+      "@openui5/sap.suite.ui.commons",
+      "@openui5/themelib_sap_fiori_3"
+    ]
+  },
+  "keywords": ["ui5", "fiori", "dashboard", "openui5"],
+  "author": "Priyanka",
+  "license": "MIT"
+}

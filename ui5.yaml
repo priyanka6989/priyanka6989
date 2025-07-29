@@ -1,0 +1,23 @@
+specVersion: '3.0'
+metadata:
+  name: ui5-fiori-dashboard
+type: application
+resources:
+  configuration:
+    paths:
+      webapp: "webapp"
+framework:
+  name: OpenUI5
+  version: "1.120.0"
+  libraries:
+    - name: sap.ui.core
+    - name: sap.m
+    - name: sap.f
+    - name: sap.suite.ui.commons
+    - name: themelib_sap_fiori_3
+server:
+  customMiddleware:
+    - name: fiori-tools-proxy
+      afterMiddleware: compression
+    - name: fiori-tools-appreload
+      afterMiddleware: compression
